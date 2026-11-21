@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KHMERACC — ហាងលក់អាខោនឌីជីថល & Auto Bakong KHQR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
+  <style>
+    :root {
+      --bg-main: #0a0f1c;
+      --bg-card: #0d1526;
+      --bg-card-hover: #131f38;
+      --bg-input: #080c16;
+      --border: rgba(255, 255, 255, 0.08);
+      --border-accent: rgba(59, 130, 246, 0.45);
+      --text-main: #f1f5f9;
+      --text-muted: #94a3b8;
+      --accent-blue: #3b82f6;
+      --accent-cyan: #06b6d4;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-amber: #f59e0b;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', 'Battambang', sans-serif;
+      background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.14), transparent 45%),
+                  radial-gradient(circle at bottom left, rgba(6, 182, 212, 0.1), transparent 45%),
+                  var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.55;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(14px);
+      background: rgba(10, 15, 28, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 18px;
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+    }
+
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-main);
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.18s ease;
+    }
+
+    .btn:hover {
+      background: var(--bg-card-hover);
+      border-color: rgba(255, 255, 255, 0.18);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-success {
+      background: linear-gradient(135deg, #059669, #10b981);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    .currency-toggle {
+      display: inline-flex;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 3px;
+    }
+
+    .currency-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      padding: 6px 11px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .currency-btn.active {
+      background: var(--accent-blue);
+      color: #fff;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px 60px;
+    }
+
+    /* Hero Banner Slider */
+    .hero-card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(120deg, #0f1c38 0%, #0b1326 55%, #122347 100%);
+      padding: 28px;
+      margin-bottom: 24px;
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 12px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: #6ee7b7;
+      font-size: 12px;
+      font-weight: 600;
+      width: fit-content;
+    }
+
+    .hero-title {
+      font-size: clamp(22px, 3.4vw, 32px);
+      font-weight: 800;
+      max-width: 680px;
+    }
+
+    .hero-desc {
+      color: var(--text-muted);
+      font-size: 14px;
+      max-width: 640px;
+    }
+
+    .hero-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .slide-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.25);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      width: 24px;
+      border-radius: 999px;
+      background: var(--accent-blue);
+    }
+
+    /* Filter & Search Bar */
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-muted);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.16s ease;
+    }
+
+    .tab-btn.active {
+      background: rgba(59, 130, 246, 0.18);
+      border-color: var(--accent-blue);
+      color: #93c5fd;
+    }
+
+    .search-box {
+      position: relative;
+      min-width: 250px;
+      flex: 0 1 320px;
+    }
+
+    .search-box input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      outline: none;
+    }
+
+    .search-box input:focus {
+      border-color: var(--accent-blue);
+    }
+
+    /* Products Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .product-card:hover {
+      transform: translateY(-3px);
+      background: var(--bg-card-hover);
+      border-color: var(--border-accent);
+    }
+
+    .product-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-box {
+      width: 68px;
+      height: 68px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 24px;
+      color: #fff;
+      flex-shrink: 0;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    }
+
+    @media (min-width: 768px) {
+      .logo-box {
+        width: 80px;
+        height: 80px;
+        font-size: 28px;
+      }
+    }
+
+    .product-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .product-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+    }
+
+    .product-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .price-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .price-value {
+      font-size: 17px;
+      font-weight: 800;
+      color: #60a5fa;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, 0.78);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 60;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-panel {
+      width: 100%;
+      max-width: 480px;
+      max-height: 92vh;
+      overflow-y: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .close-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      color: var(--text-main);
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .duration-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 14px 0 20px;
+    }
+
+    .duration-option {
+      border: 1px solid var(--border);
+      background: var(--bg-input);
+      border-radius: var(--radius-md);
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .duration-option.selected {
+      border-color: var(--accent-blue);
+      background: rgba(59, 130, 246, 0.16);
+    }
+
+    .duration-name {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .duration-price {
+      font-size: 13px;
+      color: #60a5fa;
+      font-weight: 700;
+    }
+
+    /* KHQR Payment Card */
+    .khqr-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid #e1232e;
+      margin-bottom: 14px;
+    }
+
+    .khqr-top {
+      background: #e1232e;
+      color: #ffffff;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.6px;
+    }
+
+    .khqr-meta {
+      padding: 14px 18px 8px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+
+    .khqr-merchant {
+      font-size: 16px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .khqr-sub {
+      font-size: 12px;
+      color: #475569;
+    }
+
+    .khqr-amount {
+      font-size: 20px;
+      font-weight: 800;
+      color: #e1232e;
+      text-align: right;
+    }
+
+    .khqr-qr-wrap {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .canvas-frame {
+      position: relative;
+      width: 224px;
+      height: 224px;
+      padding: 12px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #khqr-canvas {
+      display: block;
+      width: 200px;
+      height: 200px;
+    }
+
+    .status-pill {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 10px;
+      font-size: 12.5px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+    }
+
+    .status-paid {
+      background: #d1fae5;
+      color: #065f46;
+      border: 1px solid #6ee7b7;
+    }
+
+    .status-error {
+      background: #fee2e2;
+      color: #991b1b;
+      border: 1px solid #fca5a5;
+    }
+
+    .locked-box {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-size: 13px;
+    }
+
+    .credentials-box {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      font-size: 13px;
+      margin-top: 10px;
+    }
+
+    .cred-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      word-break: break-all;
+    }
+
+    .cred-row:last-child {
+      border-bottom: none;
+    }
+
+    .history-item {
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 12.5px;
+    }
+
+    .config-note {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="brand-mark">KA</div>
+        <div>
+          <div class="brand-title">KHMERACC</div>
+          <div class="brand-sub">Digital Account Store • Bakong KHQR</div>
+        </div>
+      </a>
+
+      <div class="nav-actions">
+        <div class="currency-toggle" aria-label="Currency Selector">
+          <button type="button" class="currency-btn active" id="btn-usd">USD ($)</button>
+          <button type="button" class="currency-btn" id="btn-khr">KHR (៛)</button>
+        </div>
+        <button type="button" class="btn" id="btn-banner-edit">ប្តូររូប Banner</button>
+        <button type="button" class="btn" id="btn-history">ប្រវត្តិការទិញ (<span id="history-count">0</span>)</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero-card" id="hero-section">
+      <div>
+        <div class="hero-badge" id="hero-badge">● Auto Bakong KHQR USD • ដោះសោអាខោនស្វ័យប្រវត្តិ</div>
+        <h1 class="hero-title" id="hero-title" style="margin-top: 12px;">
+          ទិញអាខោនឌីជីថលរហ័ស តម្លៃសមរម្យ ជាមួយ KHMERACC
+        </h1>
+        <p class="hero-desc" id="hero-desc" style="margin-top: 8px;">
+          ជ្រើសរើសគម្រោងអាខោនដែលអ្នកត្រូវការ ស្កេន Bakong KHQR គិតជាប្រាក់ដុល្លារ (USD) ដោយមិនបាច់វាយលុយដោយខ្លួនឯង និងទទួលបានព័ត៌មានអាខោនភ្លាមៗបន្ទាប់ពីការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់ជោគជ័យ។
+        </p>
+      </div>
+      <div class="hero-footer">
+        <div class="slide-dots" id="slide-dots"></div>
+        <div class="config-note" id="api-status-note">
+          Backend Endpoint: <code id="api-url-display">http://localhost:3000</code>
+        </div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <div class="tabs" id="category-tabs"></div>
+      <div class="search-box">
+        <input type="search" id="search-input" placeholder="ស្វែងរក Netflix, Spotify, ChatGPT, Canva..." />
+      </div>
+    </div>
+
+    <section class="grid" id="products-grid"></section>
+  </main>
+
+  <!-- Step 1 & 2 Modal: Select Duration & Pay with Auto Bakong KHQR -->
+  <div class="modal-backdrop" id="order-modal" role="dialog" aria-modal="true">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="modal-product-title">ឈ្មោះអាខោន</div>
+          <div class="product-desc" id="modal-product-desc">ព័ត៌មានលម្អិត</div>
+        </div>
+        <button type="button" class="close-btn" id="close-order-modal" aria-label="បិទ">✕</button>
+      </div>
+
+      <div id="step-select">
+        <div style="font-size: 13px; font-weight: 700; color: var(--text-muted);">ជ្រើសរើសរយៈពេលប្រើប្រាស់៖</div>
+        <div class="duration-grid" id="duration-grid"></div>
+        <button type="button" class="btn btn-primary" id="btn-order-now" style="width: 100%; justify-content: center; padding: 12px;">
+          បញ្ជាទិញឥឡូវ
+        </button>
+      </div>
+
+      <div id="step-payment" style="display: none;">
+        <div class="khqr-card">
+          <div class="khqr-top">
+            <span>KHQR</span>
+            <span>BAKONG USD</span>
+          </div>
+          <div class="khqr-meta">
+            <div>
+              <div class="khqr-merchant">KHMERACC</div>
+              <div class="khqr-sub" id="khqr-item-label">Plan • Duration</div>
+              <div class="khqr-sub" id="khqr-order-code">Order ID: -</div>
+            </div>
+            <div class="khqr-amount" id="khqr-amount-usd">$0.00 USD</div>
+          </div>
+          <div class="khqr-qr-wrap">
+            <div class="canvas-frame">
+              <canvas id="khqr-canvas" width="200" height="200"></canvas>
+            </div>
+            <div style="font-size: 12px; color: #334155; text-align: center;">
+              ស្កេន QR ជាមួយ App ធនាគារ/Bakong • តម្លៃដុល្លារស្វ័យប្រវត្តិ (មិនបាច់វាយលុយ)
+            </div>
+            <div class="status-pill status-pending" id="payment-status-pill">
+              កំពុងរង់ចាំការផ្ទៀងផ្ទាត់ការបង់ប្រាក់ពី Bakong...
+            </div>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px;">
+          <button type="button" class="btn" id="btn-copy-amount" style="flex: 1; justify-content: center;">
+            ចម្លងទឹកប្រាក់
+          </button>
+          <button type="button" class="btn" id="btn-save-qr" style="flex: 1; justify-content: center;">
+            Save រូប QR
+          </button>
+          <button type="button" class="btn" id="btn-back-plan">
+            ប្តូររយៈពេល
+          </button>
+        </div>
+
+        <div class="locked-box" id="credentials-lock-panel">
+          <div style="font-weight: 700; color: #fbbf24;">🔒 ព័ត៌មានអាខោន (Email / Password) ត្រូវបានចាក់សោ</div>
+          <p class="config-note">
+            ប្រព័ន្ធនឹងបង្ហាញ Email/Password អាខោនដោយស្វ័យប្រវត្តិ លុះត្រាតែ Bakong Open API ផ្ទៀងផ្ទាត់ថាការទូទាត់ជោគជ័យ (<code>responseCode === 0</code>)។
+          </p>
+          <div id="unlocked-credentials-container"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner Edit Modal -->
+  <div class="modal-backdrop" id="banner-modal" role="dialog" aria-modal="true">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div class="modal-title">ប្តូររូបភាព Banner (រក្សាក្នុង localStorage)</div>
+        <button type="button" class="close-btn" id="close-banner-modal">✕</button>
+      </div>
+      <p class="config-note" style="margin-bottom: 12px;">
+        បញ្ចូល URL រូបភាពសម្រាប់ Slide នីមួយៗ ឬចុច Reset ដើម្បីត្រឡប់ទៅរូបភាពដើម។
+      </p>
+      <div id="banner-inputs-list"></div>
+      <div style="display: flex; gap: 10px; margin-top: 16px;">
+        <button type="button" class="btn btn-primary" id="btn-save-banners" style="flex: 1; justify-content: center;">រក្សាទុក Banner</button>
+        <button type="button" class="btn" id="btn-reset-banners">Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Purchase History Modal -->
+  <div class="modal-backdrop" id="history-modal" role="dialog" aria-modal="true">
+    <div class="modal-panel">
+      <div class="modal-header">
+        <div class="modal-title">ប្រវត្តិការទិញរបស់ខ្ញុំ</div>
+        <button type="button" class="close-btn" id="close-history-modal">✕</button>
+      </div>
+      <div id="history-list"></div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURATION: ប្តូរ API_BASE ទៅជា URL Backend Server របស់អ្នកពេល Deploy
+    // =========================================================================
+    const API_BASE = window.KHMERACC_API_BASE || "http://localhost:3000";
+    const KHR_RATE = 4100;
+
+    const DEFAULT_BANNERS = [
+      {
+        badge: "● Auto Bakong KHQR USD • ដោះសោអាខោនស្វ័យប្រវត្តិ",
+        title: "ទិញអាខោនឌីជីថលរហ័ស តម្លៃសមរម្យ ជាមួយ KHMERACC",
+        desc: "ជ្រើសរើសគម្រោងអាខោនដែលអ្នកត្រូវការ ស្កេន Bakong KHQR គិតជាប្រាក់ដុល្លារ (USD) ដោយមិនបាច់វាយលុយដោយខ្លួនឯង និងទទួលបានព័ត៌មានអាខោនភ្លាមៗបន្ទាប់ពីការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់ជោគជ័យ។",
+        image: ""
+      },
+      {
+        badge: "⚡ ប្រព័ន្ធផ្ទៀងផ្ទាត់ស្វ័យប្រវត្តិ ២៤/៧",
+        title: "Netflix, Spotify, YouTube, ChatGPT Plus & Canva Pro",
+        desc: "អាខោនគុណភាពខ្ពស់ ស្តុកស្រាប់ ងាយស្រួលប្រើប្រាស់ ជាមួយការទូទាត់តាម Bakong KHQR ដែលកំណត់តម្លៃដុល្លារស្រាប់។",
+        image: ""
+      },
+      {
+        badge: "🛡️ សុវត្ថិភាពខ្ពស់ & តម្លៃច្បាស់លាស់",
+        title: "គ្មានការលាក់តម្លៃ • មិនបង្ហាញអាខោនមុនបង់ប្រាក់",
+        desc: "គ្រប់ការបញ្ជាទិញទាំងអស់ត្រូវបានការពាររហូតដល់ការទូទាត់ត្រូវបានបញ្ជាក់ត្រឹមត្រូវតាមប្រព័ន្ធ Bakong។",
+        image: ""
+      }
+    ];
+
+    const PRODUCTS = [
+      {
+        id: "netflix-4k",
+        category: "streaming",
+        name: "Netflix Premium (4K UHD)",
+        desc: "ទស្សនាភាពយន្ត 4K Ultra HD ច្បាស់ត្រជាក់ភ្នែក",
+        logoText: "N",
+        logoBg: "linear-gradient(135deg, #dc2626, #991b1b)",
+        plans: [
+          { sku: "netflix-1m", label: "1 ខែ", priceUsd: 2.50 },
+          { sku: "netflix-3m", label: "3 ខែ", priceUsd: 7.00 },
+          { sku: "netflix-6m", label: "6 ខែ", priceUsd: 13.50 }
+        ]
+      },
+      {
+        id: "spotify",
+        category: "music",
+        name: "Spotify Premium",
+        desc: "ស្តាប់តន្ត្រីគ្មានការរំខាន គុណភាពសំឡេងខ្ពស់",
+        logoText: "S",
+        logoBg: "linear-gradient(135deg, #16a34a, #15803d)",
+        plans: [
+          { sku: "spotify-1m", label: "1 ខែ", priceUsd: 2.00 },
+          { sku: "spotify-3m", label: "3 ខែ", priceUsd: 5.50 },
+          { sku: "spotify-12m", label: "12 ខែ", priceUsd: 19.00 }
+        ]
+      },
+      {
+        id: "youtube-premium",
+        category: "streaming",
+        name: "YouTube Premium + Music",
+        desc: "មើល YouTube និង YouTube Music ដោយគ្មានផ្សាយពាណិជ្ជកម្ម",
+        logoText: "YT",
+        logoBg: "linear-gradient(135deg, #ef4444, #b91c1c)",
+        plans: [
+          { sku: "yt-1m", label: "1 ខែ", priceUsd: 2.25 },
+          { sku: "yt-3m", label: "3 ខែ", priceUsd: 6.25 },
+          { sku: "yt-12m", label: "12 ខែ", priceUsd: 22.00 }
+        ]
+      },
+      {
+        id: "chatgpt-plus",
+        category: "ai",
+        name: "ChatGPT Plus (GPT-4o / o1)",
+        desc: "ប្រើប្រាស់ AI ជំនាន់ថ្មីល្បឿនលឿន និងមុខងារពេញលេញ",
+        logoText: "AI",
+        logoBg: "linear-gradient(135deg, #0ea5e9, #2563eb)",
+        plans: [
+          { sku: "chatgpt-1m", label: "1 ខែ", priceUsd: 6.50 },
+          { sku: "chatgpt-3m", label: "3 ខែ", priceUsd: 18.50 },
+          { sku: "chatgpt-6m", label: "6 ខែ", priceUsd: 35.00 }
+        ]
+      },
+      {
+        id: "canva-pro",
+        category: "design",
+        name: "Canva Pro",
+        desc: "រចនា Poster, Logo និង Templates រាប់លានមុខ",
+        logoText: "C",
+        logoBg: "linear-gradient(135deg, #06b6d4, #6366f1)",
+        plans: [
+          { sku: "canva-1m", label: "1 ខែ", priceUsd: 1.50 },
+          { sku: "canva-6m", label: "6 ខែ", priceUsd: 6.50 },
+          { sku: "canva-12m", label: "12 ខែ", priceUsd: 10.00 }
+        ]
+      },
+      {
+        id: "capcut-pro",
+        category: "design",
+        name: "CapCut Pro",
+        desc: "កាត់តវីដេអូ ដាក់ Effects និង Export គុណភាពខ្ពស់",
+        logoText: "CC",
+        logoBg: "linear-gradient(135deg, #1e293b, #0f172a)",
+        plans: [
+          { sku: "capcut-1m", label: "1 ខែ", priceUsd: 2.50 },
+          { sku: "capcut-3m", label: "3 ខែ", priceUsd: 7.00 },
+          { sku: "capcut-12m", label: "12 ខែ", priceUsd: 24.00 }
+        ]
+      },
+      {
+        id: "disney-plus",
+        category: "streaming",
+        name: "Disney+ Hotstar",
+        desc: "ភាពយន្ត Marvel, Pixar, Disney និងរឿងភាគល្បីៗ",
+        logoText: "D+",
+        logoBg: "linear-gradient(135deg, #1d4ed8, #1e3a8a)",
+        plans: [
+          { sku: "disney-1m", label: "1 ខែ", priceUsd: 2.25 },
+          { sku: "disney-3m", label: "3 ខែ", priceUsd: 6.00 },
+          { sku: "disney-12m", label: "12 ខែ", priceUsd: 20.00 }
+        ]
+      },
+      {
+        id: "adobe-cc",
+        category: "design",
+        name: "Adobe Creative Cloud",
+        desc: "Photoshop, Illustrator, Premiere Pro និងកម្មវិធី Adobe",
+        logoText: "Ps",
+        logoBg: "linear-gradient(135deg, #e11d48, #9d174d)",
+        plans: [
+          { sku: "adobe-1m", label: "1 ខែ", priceUsd: 5.50 },
+          { sku: "adobe-3m", label: "3 ខែ", priceUsd: 15.00 },
+          { sku: "adobe-12m", label: "12 ខែ", priceUsd: 52.00 }
+        ]
+      }
+    ];
+
+    const CATEGORIES = [
+      { id: "all", label: "ទាំងអស់ (8)" },
+      { id: "ai", label: "AI Tools" },
+      { id: "streaming", label: "Streaming" },
+      { id: "design", label: "Design & Video" },
+      { id: "music", label: "Music" }
+    ];
+
+    // App State
+    let currency = "USD";
+    let activeCategory = "all";
+    let searchQuery = "";
+    let currentSlide = 0;
+    let banners = loadBanners();
+    let historyItems = loadHistory();
+
+    let activeProduct = null;
+    let selectedPlanIndex = 0;
+    let pollTimer = null;
+    let currentOrder = null;
+
+    document.getElementById("api-url-display").textContent = API_BASE;
+
+    function formatPrice(usdAmount) {
+      if (currency === "KHR") {
+        const khr = Math.round(usdAmount * KHR_RATE);
+        return `៛${khr.toLocaleString("en-US")}`;
+      }
+      return `$${Number(usdAmount).toFixed(2)}`;
+    }
+
+    function loadBanners() {
+      try {
+        const saved = localStorage.getItem("khmeracc_banners_v1");
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          if (Array.isArray(parsed) && parsed.length === 3) return parsed;
+        }
+      } catch (_) {}
+      return JSON.parse(JSON.stringify(DEFAULT_BANNERS));
+    }
+
+    function saveBannersToStorage() {
+      localStorage.setItem("khmeracc_banners_v1", JSON.stringify(banners));
+    }
+
+    function loadHistory() {
+      try {
+        const saved = localStorage.getItem("khmeracc_history_v1");
+        return saved ? JSON.parse(saved) : [];
+      } catch (_) {
+        return [];
+      }
+    }
+
+    function addHistoryRecord(record) {
+      historyItems.unshift(record);
+      localStorage.setItem("khmeracc_history_v1", JSON.stringify(historyItems));
+      updateHistoryBadge();
+    }
+
+    function updateHistoryBadge() {
+      document.getElementById("history-count").textContent = String(historyItems.length);
+    }
+
+    // Render Hero Banner
+    function renderHero() {
+      const slide = banners[currentSlide] || DEFAULT_BANNERS[0];
+      const heroEl = document.getElementById("hero-section");
+      document.getElementById("hero-badge").textContent = slide.badge || DEFAULT_BANNERS[0].badge;
+      document.getElementById("hero-title").textContent = slide.title || DEFAULT_BANNERS[0].title;
+      document.getElementById("hero-desc").textContent = slide.desc || DEFAULT_BANNERS[0].desc;
+
+      if (slide.image && slide.image.trim()) {
+        heroEl.style.backgroundImage = `linear-gradient(120deg, rgba(10, 15, 28, 0.88), rgba(10, 15, 28, 0.72)), url("${slide.image.trim()}")`;
+        heroEl.style.backgroundSize = "cover";
+        heroEl.style.backgroundPosition = "center";
+      } else {
+        heroEl.style.backgroundImage = "";
+      }
+
+      const dotsEl = document.getElementById("slide-dots");
+      dotsEl.innerHTML = "";
+      banners.forEach((_, idx) => {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "dot" + (idx === currentSlide ? " active" : "");
+        dot.setAttribute("aria-label", `Slide ${idx + 1}`);
+        dot.addEventListener("click", () => {
+          currentSlide = idx;
+          renderHero();
+        });
+        dotsEl.appendChild(dot);
+      });
+    }
+
+    setInterval(() => {
+      currentSlide = (currentSlide + 1) % banners.length;
+      renderHero();
+    }, 6000);
+
+    // Render Category Tabs & Products
+    function renderCategories() {
+      const tabsEl = document.getElementById("category-tabs");
+      tabsEl.innerHTML = "";
+      CATEGORIES.forEach((cat) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "tab-btn" + (activeCategory === cat.id ? " active" : "");
+        btn.textContent = cat.label;
+        btn.addEventListener("click", () => {
+          activeCategory = cat.id;
+          renderCategories();
+          renderProducts();
+        });
+        tabsEl.appendChild(btn);
+      });
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById("products-grid");
+      const q = searchQuery.trim().toLowerCase();
+
+      const filtered = PRODUCTS.filter((p) => {
+        const matchesCat = activeCategory === "all" || p.category === activeCategory;
+        const matchesSearch =
+          !q ||
+          p.name.toLowerCase().includes(q) ||
+          p.desc.toLowerCase().includes(q);
+        return matchesCat && matchesSearch;
+      });
+
+      grid.innerHTML = "";
+      filtered.forEach((product) => {
+        const startPrice = Math.min(...product.plans.map((pl) => pl.priceUsd));
+        const card = document.createElement("article");
+        card.className = "product-card";
+        card.innerHTML = `
+          <div class="product-top">
+            <div class="logo-box" style="background: ${product.logoBg};">${product.logoText}</div>
+            <div>
+              <h2 class="product-title">${product.name}</h2>
+              <p class="product-desc">${product.desc}</p>
+            </div>
+          </div>
+          <div class="product-bottom">
+            <div>
+              <div class="price-label">ចាប់ពី</div>
+              <div class="price-value">${formatPrice(startPrice)}</div>
+            </div>
+            <button type="button" class="btn btn-primary btn-buy-product">ទិញឥឡូវ</button>
+          </div>
+        `;
+        card.querySelector(".btn-buy-product").addEventListener("click", () => openOrderModal(product));
+        grid.appendChild(card);
+      });
+    }
+
+    // Order Modal Logic
+    function openOrderModal(product) {
+      stopPolling();
+      currentOrder = null;
+      activeProduct = product;
+      selectedPlanIndex = 0;
+
+      document.getElementById("modal-product-title").textContent = product.name;
+      document.getElementById("modal-product-desc").textContent = product.desc;
+      document.getElementById("step-select").style.display = "block";
+      document.getElementById("step-payment").style.display = "none";
+
+      renderDurationOptions();
+      document.getElementById("order-modal").classList.add("open");
+    }
+
+    function renderDurationOptions() {
+      const grid = document.getElementById("duration-grid");
+      grid.innerHTML = "";
+      activeProduct.plans.forEach((plan, idx) => {
+        const opt = document.createElement("div");
+        opt.className = "duration-option" + (idx === selectedPlanIndex ? " selected" : "");
+        opt.innerHTML = `
+          <div class="duration-name">${plan.label}</div>
+          <div class="duration-price">${formatPrice(plan.priceUsd)}</div>
+        `;
+        opt.addEventListener("click", () => {
+          selectedPlanIndex = idx;
+          renderDurationOptions();
+        });
+        grid.appendChild(opt);
+      });
+    }
+
+    function closeOrderModal() {
+      stopPolling();
+      document.getElementById("order-modal").classList.remove("open");
+    }
+
+    function stopPolling() {
+      if (pollTimer) {
+        clearInterval(pollTimer);
+        pollTimer = null;
+      }
+    }
+
+    // Draw QR onto single <canvas id="khqr-canvas"> with centered Bakong emblem
+    function drawKhqrCanvas(qrString) {
+      const canvas = document.getElementById("khqr-canvas");
+      const size = 200;
+      canvas.width = size;
+      canvas.height = size;
+
+      new QRious({
+        element: canvas,
+        value: qrString,
+        size: size,
+        level: "H",
+        background: "#ffffff",
+        foreground: "#0f172a"
+      });
+
+      const ctx = canvas.getContext("2d");
+      const cx = size / 2;
+      const cy = size / 2;
+      const r = 20;
+
+      // White padding circle so QR scanner easily reads center emblem
+      ctx.beginPath();
+      ctx.arc(cx, cy, r + 3, 0, Math.PI * 2);
+      ctx.fillStyle = "#ffffff";
+      ctx.fill();
+
+      // Bakong red badge
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = "#e1232e";
+      ctx.fill();
+
+      // Inner emblem octagon/diamond motif
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "bold 12px Inter, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText("KH", cx, cy);
+    }
+
+    // Start Auto Payment via Backend (/api/create-payment + /api/check-payment)
+    async function handleOrderNow() {
+      if (!activeProduct) return;
+      const plan = activeProduct.plans[selectedPlanIndex];
+      const btnOrder = document.getElementById("btn-order-now");
+      btnOrder.disabled = true;
+      btnOrder.textContent = "កំពុងបង្កើត KHQR...";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/create-payment`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            itemId: plan.sku,
+            title: `${activeProduct.name} • ${plan.label}`,
+            amountUsd: plan.priceUsd
+          })
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success || !data.qrString) {
+          throw new Error(data.error || "មិនអាចបង្កើត Dynamic USD KHQR ពី Server បានទេ");
+        }
+
+        currentOrder = data;
+        document.getElementById("step-select").style.display = "none";
+        document.getElementById("step-payment").style.display = "block";
+
+        document.getElementById("khqr-item-label").textContent = `${activeProduct.name} • ${plan.label}`;
+        document.getElementById("khqr-order-code").textContent = `Order ID: ${data.orderId}`;
+        document.getElementById("khqr-amount-usd").textContent = `$${Number(plan.priceUsd).toFixed(2)} USD`;
+
+        // Reset lock state strictly before payment confirmation
+        document.getElementById("unlocked-credentials-container").innerHTML = "";
+        const pill = document.getElementById("payment-status-pill");
+        pill.className = "status-pill status-pending";
+        pill.textContent = "កំពុងរង់ចាំការផ្ទៀងផ្ទាត់ការបង់ប្រាក់ពី Bakong...";
+
+        drawKhqrCanvas(data.qrString);
+        startPaymentPolling(data, plan);
+      } catch (err) {
+        alert(
+          `បញ្ហាការភ្ជាប់ Auto Payment Gateway: ${err.message}\n` +
+          `សូមប្រាកដថា Backend Server កំពុងដំណើរការនៅ ${API_BASE}`
+        );
+      } finally {
+        btnOrder.disabled = false;
+        btnOrder.textContent = "បញ្ជាទិញឥឡូវ";
+      }
+    }
+
+    function startPaymentPolling(orderData, plan) {
+      stopPolling();
+
+      const checkOnce = async () => {
+        try {
+          const resp = await fetch(`${API_BASE}/api/check-payment`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ orderId: orderData.orderId, md5: orderData.md5 })
+          });
+          const result = await resp.json();
+
+          if (result && result.paid === true) {
+            stopPolling();
+            onPaymentConfirmed(orderData, plan, result);
+          }
+        } catch (_) {
+          // Keep polling quietly while waiting for network/payment
+        }
+      };
+
+      checkOnce();
+      pollTimer = setInterval(checkOnce, 3000);
+    }
+
+    function onPaymentConfirmed(orderData, plan, result) {
+      const pill = document.getElementById("payment-status-pill");
+      pill.className = "status-pill status-paid";
+      pill.textContent = "✅ ការទូទាត់ត្រូវបានផ្ទៀងផ្ទាត់ជោគជ័យ! អាខោនត្រូវបានដោះសោ";
+
+      const creds = result.credentials || {};
+      const container = document.getElementById("unlocked-credentials-container");
+      container.innerHTML = `
+        <div class="credentials-box">
+          <div style="font-weight: 800; color: #6ee7b7; margin-bottom: 6px;">ព័ត៌មានអាខោនរបស់អ្នក</div>
+          ${creds.email ? `<div class="cred-row"><span>Email / User:</span><strong>${creds.email}</strong></div>` : ""}
+          ${creds.password ? `<div class="cred-row"><span>Password:</span><strong>${creds.password}</strong></div>` : ""}
+          ${creds.note ? `<div class="cred-row"><span>Note:</span><span>${creds.note}</span></div>` : ""}
+          ${creds.info ? `<div class="cred-row"><span>ព័ត៌មាន:</span><span>${creds.info}</span></div>` : ""}
+          ${result.txHash ? `<div class="cred-row"><span>Tx Hash:</span><span>${result.txHash}</span></div>` : ""}
+        </div>
+      `;
+
+      addHistoryRecord({
+        orderId: orderData.orderId,
+        product: `${activeProduct.name} • ${plan.label}`,
+        amountUsd: Number(plan.priceUsd).toFixed(2),
+        paidAt: new Date().toLocaleString(),
+        credentials: creds
+      });
+    }
+
+    // Banner Editor
+    function openBannerModal() {
+      const list = document.getElementById("banner-inputs-list");
+      list.innerHTML = "";
+      banners.forEach((b, idx) => {
+        const wrap = document.createElement("div");
+        wrap.style.marginBottom = "10px";
+        wrap.innerHTML = `
+          <label style="display:block; font-size:12px; font-weight:700; margin-bottom:4px;">Banner #${idx + 1} Image URL</label>
+          <input type="text" data-idx="${idx}" class="banner-url-input" value="${b.image || ""}" placeholder="https://..." style="width:100%; padding:9px 12px; border-radius:8px; border:1px solid var(--border); background:var(--bg-input); color:var(--text-main);" />
+        `;
+        list.appendChild(wrap);
+      });
+      document.getElementById("banner-modal").classList.add("open");
+    }
+
+    // History Modal
+    function openHistoryModal() {
+      const list = document.getElementById("history-list");
+      if (!historyItems.length) {
+        list.innerHTML = `<p class="config-note">មិនទាន់មានប្រវត្តិការទិញដែលបានបញ្ជាក់ការបង់ប្រាក់នៅឡើយទេ។</p>`;
+      } else {
+        list.innerHTML = historyItems
+          .map(
+            (item) => `
+          <div class="history-item">
+            <div style="display:flex; justify-content:space-between; font-weight:700;">
+              <span>${item.product}</span>
+              <span style="color:#60a5fa;">$${item.amountUsd} USD</span>
+            </div>
+            <div class="config-note">Order: ${item.orderId} • ${item.paidAt}</div>
+            ${item.credentials && item.credentials.email ? `<div class="config-note">Email: ${item.credentials.email} | Pass: ${item.credentials.password || "-"}</div>` : ""}
+          </div>
+        `
+          )
+          .join("");
+      }
+      document.getElementById("history-modal").classList.add("open");
+    }
+
+    // Bind Events
+    document.getElementById("btn-usd").addEventListener("click", () => {
+      currency = "USD";
+      document.getElementById("btn-usd").classList.add("active");
+      document.getElementById("btn-khr").classList.remove("active");
+      renderProducts();
+      if (activeProduct) renderDurationOptions();
+    });
+
+    document.getElementById("btn-khr").addEventListener("click", () => {
+      currency = "KHR";
+      document.getElementById("btn-khr").classList.add("active");
+      document.getElementById("btn-usd").classList.remove("active");
+      renderProducts();
+      if (activeProduct) renderDurationOptions();
+    });
+
+    document.getElementById("search-input").addEventListener("input", (e) => {
+      searchQuery = e.target.value;
+      renderProducts();
+    });
+
+    document.getElementById("btn-order-now").addEventListener("click", handleOrderNow);
+    document.getElementById("close-order-modal").addEventListener("click", closeOrderModal);
+
+    document.getElementById("btn-back-plan").addEventListener("click", () => {
+      stopPolling();
+      document.getElementById("step-payment").style.display = "none";
+      document.getElementById("step-select").style.display = "block";
+    });
+
+    document.getElementById("btn-copy-amount").addEventListener("click", () => {
+      if (!activeProduct) return;
+      const plan = activeProduct.plans[selectedPlanIndex];
+      navigator.clipboard?.writeText(Number(plan.priceUsd).toFixed(2));
+      alert(`បានចម្លងទឹកប្រាក់: $${Number(plan.priceUsd).toFixed(2)} USD`);
+    });
+
+    document.getElementById("btn-save-qr").addEventListener("click", () => {
+      const canvas = document.getElementById("khqr-canvas");
+      const link = document.createElement("a");
+      link.download = `KHMERACC-${currentOrder ? currentOrder.orderId : "KHQR"}.png`;
+      link.href = canvas.toDataURL("image/png");
+      link.click();
+    });
+
+    document.getElementById("btn-banner-edit").addEventListener("click", openBannerModal);
+    document.getElementById("close-banner-modal").addEventListener("click", () => {
+      document.getElementById("banner-modal").classList.remove("open");
+    });
+
+    document.getElementById("btn-save-banners").addEventListener("click", () => {
+      document.querySelectorAll(".banner-url-input").forEach((inp) => {
+        const idx = Number(inp.dataset.idx);
+        if (banners[idx]) banners[idx].image = inp.value.trim();
+      });
+      saveBannersToStorage();
+      renderHero();
+      document.getElementById("banner-modal").classList.remove("open");
+    });
+
+    document.getElementById("btn-reset-banners").addEventListener("click", () => {
+      banners = JSON.parse(JSON.stringify(DEFAULT_BANNERS));
+      saveBannersToStorage();
+      renderHero();
+      openBannerModal();
+    });
+
+    document.getElementById("btn-history").addEventListener("click", openHistoryModal);
+    document.getElementById("close-history-modal").addEventListener("click", () => {
+      document.getElementById("history-modal").classList.remove("open");
+    });
+
+    // Initial Boot
+    updateHistoryBadge();
+    renderHero();
+    renderCategories();
+    renderProducts();
+  </script>
+</body>
+</html>
